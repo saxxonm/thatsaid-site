@@ -57,7 +57,7 @@
 <section id="agents"><div class="wrap">
 <div class="agrid"><div><p class="lbl rv">For agent makers</p><h2 class="rv">You build the agent.<br>We are its memory of every meeting.</h2><p class="sub rv">Agent-first by design: read-only access, a revocable token per agent, and your choice of agent: Grok Bot, Claude, ChatGPT or any MCP client.</p><p class="url rv"><code>mcp.thatsaid.app</code></p></div><div class="term rv" id="term"><div class="tbar"><i></i><i></i><i></i><span>agent ⇄ mcp.thatsaid.app</span><span class="ph sm">illustrative</span></div>
 <pre><span class="c"># your agent, connected to mcp.thatsaid.app</span>
-<span class="k">→ tools/call</span> <span class="typed" data-text='list_transcripts { "query": "launch timing", "date": "2026-11-01" }'>list_transcripts { "query": "launch timing", "date": "2026-11-01" }</span><span class="caret" aria-hidden="true"></span>
+<span class="k">→ tools/call</span> <span class="typed" data-text='search_transcripts { "query": "launch timing" }'>search_transcripts { "query": "launch timing" }</span><span class="caret" aria-hidden="true"></span>
 <span class="res"><span class="g">← result</span>  <span class="c">read-only · token tsd_ro_••••7f2c</span>
 {
   <span class="s">"title"</span>: <span class="s">"Launch timing sync"</span>,
