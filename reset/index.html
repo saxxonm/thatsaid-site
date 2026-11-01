@@ -1,40 +1,8 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
-<title>Thatsaid</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css">
-<main><picture class="lockup"><source srcset="/lockup-dark.svg" media="(prefers-color-scheme: dark)"><img src="/lockup-light.svg" alt="thatsaid" height="40"></picture><h1 id="t">Confirming…</h1><p id="m">One moment.</p><div id="x"></div></main>
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-const SUPABASE_URL = "https://fbokbmmjnibscduiqmme.supabase.co";
-const ANON_KEY = "sb_publishable_LSAe176MdAOo7H0N7LrZjg_ttAZKr3s"; // publishable key: public by design. Never put a service key here.
-const MODE = "reset";
-const $ = id => document.getElementById(id);
-const q = new URLSearchParams(location.search), h = new URLSearchParams(location.hash.slice(1));
-const token_hash = q.get("token_hash"), type = q.get("type") || (MODE === "reset" ? "recovery" : "signup");
-const fail = (msg) => { $("t").textContent = "That link didn't work"; $("m").innerHTML = '<span class="err"></span>'; $("m").firstChild.textContent = msg + " Request a new email from the Thatsaid app."; };
-const done = () => { $("t").textContent = "Email confirmed"; $("m").textContent = "Return to Thatsaid to finish setting up two-factor sign-in."; $("x").innerHTML = '<a class="btn" href="thatsaid://auth-callback?confirmed=1">Open Thatsaid</a>'; };
-history.replaceState(null, "", location.pathname); // keep the token out of history / screenshots
-if (q.get("error_description") || h.get("error_description")) fail((q.get("error_description") || h.get("error_description")).replace(/\+/g," ") + ".");
-else if (!token_hash) fail("This link is missing its code.");
-else {
-  const sb = createClient(SUPABASE_URL, ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } });
-  let left = false; document.addEventListener("visibilitychange", () => { if (document.hidden) left = true; });
-  if (MODE === "confirm" && /iPhone|iPad|Macintosh/.test(navigator.userAgent)) {
-    location.href = "thatsaid://auth-callback?token_hash=" + encodeURIComponent(token_hash) + "&type=" + encodeURIComponent(type);
-  }
-  setTimeout(async () => {
-    if (left && MODE === "confirm") { $("t").textContent = "Opening Thatsaid…"; $("m").textContent = "If nothing happened, reload this page."; return; }
-    const { error } = await sb.auth.verifyOtp({ token_hash, type });
-    if (error) {
-      if (MODE === "confirm" && /expired|invalid/i.test(error.message)) fail("This link has already been used or has expired.");
-      else fail(error.message + ".");
-      return;
-    }
-    if (MODE === "confirm") return done();
-    $("t").textContent = "Choose a new password"; $("m").textContent = "At least 12 characters with upper- and lowercase letters and a number.";
-    $("x").innerHTML = '<form id="f"><input id="p" type="password" autocomplete="new-password" placeholder="New password" required minlength="12"><button>Save password</button></form>';
-    $("f").onsubmit = async (e) => { e.preventDefault();
-      const r = await sb.auth.updateUser({ password: $("p").value });
-      if (r.error) { $("m").innerHTML = '<span class="err"></span>'; $("m").firstChild.textContent = r.error.message; return; }
-      await sb.auth.signOut(); $("t").textContent = "Password updated"; $("m").textContent = "Return to Thatsaid and sign in with your new password."; $("x").innerHTML = ""; };
-  }, MODE === "confirm" ? 1500 : 0);
-}
-</script></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#09090B" media="(prefers-color-scheme: dark)">
+<title>thatsaid</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/auth.css"></head>
+<body data-mode="reset">
+<header><a href="/"><picture><source srcset="/lockup-dark.svg" media="(prefers-color-scheme: dark)"><img src="/lockup-light.svg" alt="thatsaid"></picture></a></header>
+<main><section class="card" aria-live="polite"><div id="icon" class="icon wait"><div class="spin"></div></div><h1 id="t">Checking your link…</h1><p id="m">One moment.</p><div id="x"></div></section></main>
+<footer>© thatsaid · <a href="mailto:contact@thatsaid.app">contact@thatsaid.app</a></footer>
+<script src="/auth.js" defer></script></body></html>

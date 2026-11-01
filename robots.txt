@@ -1,4 +1,4 @@
-# Thatsaid welcomes search and AI crawlers.
+# thatsaid welcomes search and AI crawlers.
 User-agent: Googlebot
 Allow: /
 
