@@ -164,3 +164,19 @@ footer{border-top:1px solid var(--line);padding:36px 0 48px;color:var(--mut);fon
 .stage.vid::after{content:"Illustrative";position:absolute;right:16px;bottom:8px;font-size:11px;color:#71717A;z-index:2}
 .tt code{word-break:break-all}.tt td code{font-size:13px}
 .tools>div{min-width:0}.tt{table-layout:fixed}.tt td{overflow-wrap:anywhere}@media (max-width:600px){.tt td:first-child{width:42%}}
+
+/* Agent Dictation (draft Nov 24, 2026) */
+.tlink{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--am);font-weight:600;text-decoration:none}.tlink:hover{text-decoration:underline}
+.adgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:24px;margin-top:56px}
+.adcard{padding:28px;border-radius:18px;background:var(--s1);border:1px solid var(--line)}.adcard h3{font-size:22px;margin-bottom:10px}.adcard p{color:var(--mut);line-height:1.55;font-size:16.5px}
+.adfeat{background:linear-gradient(140deg,rgba(255,90,31,.13),rgba(255,182,39,.04) 60%),var(--s1);border-color:rgba(255,90,31,.3)}
+.adstage{margin-top:20px;aspect-ratio:16/10;border-radius:14px;overflow:hidden;background:var(--s2);border:1px solid var(--line)}.adstage img{display:block;width:100%;height:100%;object-fit:cover}
+.adsteps-img{display:block;width:100%;height:auto;margin-top:40px}
+.adfine{margin-top:28px;color:var(--dim);font-size:15px}
+.adpage h1{font-size:clamp(40px,6vw,72px);line-height:1.04;letter-spacing:-.035em;max-width:900px}
+.adpage .ctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:32px}
+.adlist{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 32px;margin-top:40px}.adlist li{color:var(--mut);line-height:1.55;font-size:16.5px}.adlist b{color:var(--fg)}
+.adset{display:block;width:100%;max-width:880px;height:auto;margin-top:40px;border-radius:14px}
+.adfaq{margin-top:40px;max-width:820px}.adfaq details{border-bottom:1px solid var(--line);padding:18px 0}.adfaq summary{cursor:pointer;font-weight:650;font-size:18px}.adfaq p{color:var(--mut);margin-top:10px;line-height:1.6}
+@media (max-width:1000px){.adgrid{grid-template-columns:1fr}}
+@media (max-width:600px){.adlist{grid-template-columns:1fr}.adcard{padding:22px}}

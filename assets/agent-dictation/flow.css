@@ -1,0 +1,70 @@
+/* thatsaid Agent Dictation flow loop. DRAFT. Everything is scoped under .ad-flow; no page globals needed.
+   Stage is 1280x800 logical (16:10); the mobile cut (container <= 600px wide) crops to the centre 960x600. */
+.ad-flow{position:relative;width:100%;height:100%;min-height:0;aspect-ratio:16/10;overflow:hidden;background:#0A0A0D;contain:layout paint;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,"Segoe UI",sans-serif;color:#F5F5F7;-webkit-font-smoothing:antialiased;line-height:1.3;text-align:left}
+.ad-flow *,.ad-flow *:before,.ad-flow *:after{box-sizing:border-box;margin:0;padding:0}
+.ad-flow .adf-poster,.ad-flow .adf-poster img{display:block;width:100%;height:100%;object-fit:cover}
+.ad-flow .adf-scene{display:none;position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:0 0}
+.ad-flow.adf-live .adf-scene{display:block}
+.ad-flow.adf-live .adf-poster{display:none}
+.ad-flow .adf-wall{position:absolute;inset:0;background:radial-gradient(760px 520px at 12% 0%,rgba(255,90,31,.30),transparent 62%),radial-gradient(700px 520px at 100% 100%,rgba(255,182,39,.18),transparent 60%),#0A0A0D}
+.ad-flow .adf-menubar{position:absolute;left:0;right:0;top:0;height:30px;background:rgba(20,20,24,.62);display:flex;align-items:center;padding:0 16px;font-size:13px;gap:20px;color:rgba(245,245,247,.92)}
+.ad-flow .adf-menubar b{font-weight:700}.ad-flow .adf-menubar .adf-r{margin-left:auto;display:flex;gap:16px;align-items:center}
+.ad-flow svg{display:block}
+.ad-flow .adf-win{position:absolute;border-radius:14px;overflow:hidden;box-shadow:0 0 0 .5px rgba(255,255,255,.16),0 30px 70px -20px rgba(0,0,0,.7)}
+.ad-flow .adf-doc{left:140px;top:78px;width:760px;height:600px;background:#1C1C1E}
+.ad-flow .adf-tb{height:44px;display:flex;align-items:center;padding:0 16px;gap:8px;background:#26262A;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;font-weight:600;color:rgba(245,245,247,.85)}
+.ad-flow .adf-tb>i{width:12px;height:12px;border-radius:50%;flex:none}.ad-flow .adf-tb>i:nth-child(1){background:#FF5F57}.ad-flow .adf-tb>i:nth-child(2){background:#FEBC2E}.ad-flow .adf-tb>i:nth-child(3){background:#28C840}
+.ad-flow .adf-tb>span{flex:1;text-align:center;margin-right:52px}
+.ad-flow .adf-page{padding:36px 64px;color:#E8E8ED}
+.ad-flow .adf-h1{font-size:30px;font-weight:750;letter-spacing:-.02em;line-height:1.15}
+.ad-flow .adf-sub{font-size:13px;color:rgba(235,235,245,.55);margin:6px 0 22px}
+.ad-flow .adf-h2{font-size:15px;font-weight:700;margin:18px 0 8px;color:#FFB627}
+.ad-flow .adf-li{font-size:14px;line-height:1.5;padding-left:16px;position:relative;color:rgba(235,235,245,.82)}
+.ad-flow .adf-li:before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;border-radius:50%;background:#FF5A1F}
+.ad-flow .adf-bar{height:9px;border-radius:5px;background:rgba(255,255,255,.08);margin:9px 0}
+/* pointer + real 2.0.11 cursor chip (DictationChip: 132x28 capsule, #09090B 92%, amber 0.5pt hairline), drawn at 1.5x */
+.ad-flow .adf-cursor{position:absolute;left:470px;top:300px;width:22px;height:30px}
+.ad-flow .adf-chip{position:absolute;left:491px;top:330px;width:198px;height:42px;border-radius:21px;background:rgba(9,9,11,.92);box-shadow:inset 0 0 0 .75px rgba(255,182,39,.5),0 10px 26px -8px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;gap:9px;font-size:19px;font-weight:500;color:rgba(255,255,255,.92);transform-origin:0 50%}
+.ad-flow .adf-chip svg{width:26px;height:26px}
+.ad-flow .adf-chip .adf-b{transform-origin:center;transform-box:fill-box}
+/* key HUD: a presentation overlay, not app UI */
+.ad-flow .adf-keys{position:absolute;left:640px;top:640px;display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:22px;background:rgba(9,9,11,.8);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 24px 50px -16px rgba(0,0,0,.8)}
+.ad-flow .adf-key{position:relative;width:112px;height:70px;border-radius:12px;background:linear-gradient(#2E2E33,#232327);box-shadow:0 0 0 1px rgba(255,255,255,.10),0 5px 0 #141417,0 8px 14px rgba(0,0,0,.5);color:#F5F5F7}
+.ad-flow .adf-key .g{position:absolute;right:12px;top:8px;font-size:20px;font-weight:500}
+.ad-flow .adf-key .n{position:absolute;left:12px;bottom:9px;font-size:13px;font-weight:600}
+.ad-flow .adf-key .s{position:absolute;left:12px;top:11px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#FFB627}
+.ad-flow .adf-key.adf-ret{width:132px}
+.ad-flow .adf-key.adf-on{transform:translateY(4px);background:linear-gradient(#3A2A22,#2B2019);box-shadow:0 0 0 1.5px #FF5A1F,0 1px 0 #141417,0 0 28px rgba(255,90,31,.45)}
+.ad-flow .adf-plus{font-size:22px;color:rgba(245,245,247,.5);font-weight:300}
+/* review panel: mirrors AgentReviewBody (2.0.11), 384pt wide, drawn at 1.25x */
+.ad-flow .adf-panel{position:absolute;left:448px;top:70px;width:384px;border-radius:12px;background:#232325;box-shadow:0 0 0 .5px rgba(255,255,255,.18),0 40px 90px -20px rgba(0,0,0,.85);transform-origin:50% 40%}
+.ad-flow .adf-ptb{height:30px;display:flex;align-items:center;padding:0 10px;gap:7px;font-size:13px;font-weight:600;color:rgba(245,245,247,.88)}
+.ad-flow .adf-ptb>i{width:11px;height:11px;border-radius:50%}.ad-flow .adf-ptb>i:nth-child(1){background:#FF5F57}.ad-flow .adf-ptb>i:nth-child(2){background:#FEBC2E}.ad-flow .adf-ptb>i:nth-child(3){background:#28C840}
+.ad-flow .adf-ptb>span{flex:1;text-align:center;margin-right:46px}
+.ad-flow .adf-pb{padding:8px 16px 16px;display:flex;flex-direction:column;gap:12px}
+.ad-flow .adf-ph{font-size:15px;font-weight:600}
+.ad-flow .adf-te{min-height:120px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);background:#1E1E20;padding:5px 6px;font-size:13px;line-height:1.35;color:#F5F5F7}
+.ad-flow .adf-sel{background:rgba(255,90,31,.45);border-radius:2px}
+.ad-flow .adf-caret{display:inline-block;width:1.5px;height:15px;background:#F5F5F7;vertical-align:-3px;margin-left:1px}
+.ad-flow .adf-thumb{position:relative;overflow:hidden;border-radius:8px;background:#1C1C1E;flex:none}
+.ad-flow .adf-thumb .adf-doc{position:absolute;left:0;top:0;transform-origin:0 0;box-shadow:none;border-radius:0}
+.ad-flow .adf-pthumb{width:178px;height:140px}.ad-flow .adf-pthumb .adf-doc{transform:scale(.2333)}
+.ad-flow .adf-chk{display:flex;align-items:center;gap:7px;font-size:13px}
+.ad-flow .adf-chk .bx{width:14px;height:14px;border-radius:3.5px;background:#5A5A5E;display:grid;place-items:center}
+.ad-flow .adf-btns{display:flex;align-items:center;justify-content:space-between}
+.ad-flow .adf-cancel{font-size:13px;padding:3px 11px;border-radius:6px;background:rgba(255,255,255,.1);box-shadow:0 0 0 .5px rgba(255,255,255,.12)}
+.ad-flow .adf-send{font-size:13px;font-weight:600;padding:9px 18px;border-radius:9px;color:#fff;background:linear-gradient(135deg,#FFA21A,#FF5A1F,#F2312A);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 3px 8px rgba(242,49,42,.3)}
+.ad-flow .adf-hint{font-size:11px;color:rgba(235,235,245,.55)}
+/* Grok Bot window: neutral demo chat, not Grok Bot's real UI */
+.ad-flow .adf-gb{left:660px;top:118px;width:470px;height:540px;background:#151517;display:flex;flex-direction:column}
+.ad-flow .adf-gb .adf-tb>span{text-align:left;margin:0 0 0 10px;display:flex;align-items:center;gap:8px}
+.ad-flow .adf-bm{width:20px;height:20px;border-radius:6px;background:#F5F5F7;color:#09090B;display:grid;place-items:center;font:800 11px/1 Inter,-apple-system,sans-serif;flex:none}
+.ad-flow .adf-thread{flex:1;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;overflow:hidden}
+.ad-flow .adf-msg{align-self:flex-end;max-width:88%;background:#2F2F35;color:#F5F5F7;border-radius:18px 18px 6px 18px;padding:12px 14px;font-size:15px;line-height:1.4}
+.ad-flow .adf-path{display:block;margin-top:8px;font:12px/1.35 ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;color:#FFB627;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ad-flow .adf-typing{align-self:flex-start;display:flex;gap:5px;padding:13px 14px;border-radius:18px 18px 18px 6px;background:#26262A}
+.ad-flow .adf-typing i{width:7px;height:7px;border-radius:50%;background:rgba(235,235,245,.6)}
+.ad-flow .adf-comp{margin:0 14px 14px;border-radius:16px;background:#202024;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);padding:12px 14px;min-height:54px;font-size:15px;line-height:1.4}
+.ad-flow .adf-comp .adf-ph2{color:rgba(235,235,245,.4)}
+.ad-flow .adf-comp.adf-filled{box-shadow:inset 0 0 0 1.5px rgba(255,90,31,.7)}
+.ad-flow [data-a]{will-change:transform,opacity}

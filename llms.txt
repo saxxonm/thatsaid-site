@@ -1,0 +1,24 @@
+# thatsaid
+
+> thatsaid is a Mac app that puts intelligence at your fingertips on any screen: dictation in any app, Agent Dictation that sends your words (and an optional front-window screenshot) to your AI agent after you review them, and hands-free meeting memory your agents can read through MCP.
+
+Requirements: macOS 26 or later on a Mac with Apple silicon. iPhone and iPad apps are coming soon. Agent Dictation is Mac only.
+
+## Features
+
+- [Agent Dictation](https://thatsaid.app/agent-dictation/): hold a key combo (default Right Option + Right Command), speak, let go, review and edit the text in a panel, then press Return to send or Esc to cancel. Works with Grok Bot and OpenBot, more coming. Nothing is sent until you confirm.
+- Dictation: talk instead of type anywhere on your Mac, with fn or an fn combo. Separate from the Agent Dictation shortcut.
+- Meetings: thatsaid records meetings hands-free and transcribes them on your device, with smart titles and summaries.
+- [MCP server](https://thatsaid.app/mcp/): read-only access to your transcripts for the agents you connect, with a revocable token per agent.
+
+## Privacy
+
+- Speech is transcribed on-device (NVIDIA Parakeet). Audio never leaves the Mac.
+- Agent Dictation sends only the reviewed text and, if the Attach screenshot box is checked, a screenshot of the front window, to the agent you picked.
+- Screenshots are saved only when you send, in thatsaid's own folder, deleted after 7 days or sooner past 200 MB, and can be cleared any time in Settings. They are never put on the clipboard.
+- The screenshot box starts unchecked in apps like 1Password and Messages, in apps you add, and during meetings. Screenshots are always off when a password field is focused.
+- [Privacy policy](https://thatsaid.app/privacy/) · [Delete your data](https://thatsaid.app/help/delete-data/)
+
+## Download
+
+- [Download for Mac](https://github.com/saxxonm/thatsaid-releases/releases/latest/download/thatsaid.dmg)
